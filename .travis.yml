@@ -1,9 +1,11 @@
 language: python
 
-dist: precise
+dist: xenial
 
 python:
   - "3.6"
+  - "3.7"
+  - "2.7"
 
 before_install:
   - export TZ=Europe/Brussels
@@ -11,10 +13,13 @@ before_install:
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
   - conda update --yes conda
-  - conda install --yes numpy scipy
+  - conda install --yes numpy scipy mysqlclient
   - pip install --quiet pytest pytest-cov pytest-xdist chardet
 
 install:
+  #for handling Python 2.7. = specially for Travis Cl, shouldn't be relevant for anything else
+  - pip uninstall -y six
+  - pip install six>=1.11.0
   - python setup.py install --quiet
   - pip freeze
   # Install and compile libsvm and liblinear

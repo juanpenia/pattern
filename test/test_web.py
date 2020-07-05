@@ -17,7 +17,8 @@ import time
 import warnings
 
 from pattern import web
-
+from random import seed
+seed(0)
 try:
     PATH = os.path.dirname(os.path.realpath(__file__))
 except:
@@ -500,6 +501,7 @@ class TestSearchEngine(unittest.TestCase):
         if source != web.MEDIAWIKI:
             self.assertEqual(v.source, source)
             self.assertEqual(v.type, type)
+            #this also behaves completely randomly
             self.assertEqual(len(v), 1)
             self.assertTrue(isinstance(v[0], web.Result))
             self.assertTrue(isinstance(v[0].url, str))
